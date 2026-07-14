@@ -1,270 +1,260 @@
-let a: string = 'str';
-let b: number = 5;
-let c: boolean = true;
+import axios from 'axios';
 
-let d: null = null;
-let e: undefined = undefined;
+// enum Role {
+//   Admin = 'admin',
+//   Guest = 'guest',
+//   User = 'user'
+// }
 
-let f: any;
-f = 123;
-// f.toLowerCase();
+// function handleGreetMessage(role: Role, name: string): string {
+//   switch (role) {
+//     case Role.Admin:
+//       return `Hello Admin, ${name}`
+//     case Role.Guest:
+//       return `Hello Guest, ${name}`
+//     case Role.User:
+//       return `Hello ${name}`
+//   }
+// }
 
-let g: unknown;
-g = 123;
-if (typeof g === 'string') {
-  g.toLowerCase();
-};
+// handleGreetMessage(Role.Admin, 'Dmytro');
 
-interface Car {
-  readonly VIN: string;
-  engine: string;
-  color: string;
-  weight?: number;
-  number: string;
-}
+//! =========================================
 
-const car: Car = {
-  VIN: "EH3432h342jJ32kk",
-  engine: "v8",
-  color: "red",
-  weight: 2000,
-  number: "AX8472AA",
-};
+// Задача 1. Узагальнена функція wrapInArray
+// Умова
 
-const carImport: Car = {
-  VIN: "EH3432h3das21jJd22kk",
-  engine: "v12",
-  color: "green",
-  number: "PL3676XC",
-};
+// Є функція:
 
-// car.VIN = '312321'; Error can`t change readonly
+// function wrapInArray(value) {
+//   return [value];
+// }
 
-car.color = 'red';
+// Зараз вона не типізована.
 
-let user: User | null = null;
+// Завдання
+
+// Зроби функцію узагальненою
+
+// function wrapInArray<T>(value: T): T[] {
+//   return [value];
+// }
+
+// wrapInArray<number>(1);
+
+//! =========================================
+
+// Задача 2. Узагальнена функція getLastElement
+// Умова
+
+// Створи функцію getLastElement, яка:
+
+// приймає масив будь-якого типу
+
+// повертає останній елемент масиву
+
+// Зроби функцію узагальненою.
+
+// function getLastElement<T>(array: T[]): T {
+//   return array[array.length - 1];
+// }
+
+// getLastElement<string | number>(['1', 2, '3']);
+
+//! =========================================
+
+// Задача 3. Узагальнена функція pair
+// Умова
+
+// Створи функцію pair, яка:
+
+// приймає два значення, які можуть бути різного типу
+
+// повертає їх як 1) масив /  2)кортеж
+
+// Зроби функцію узагальненою
+
+// //!variant 1
+
+// function pair1<T, Y>(value1: T, value2: Y): (T | Y)[] {
+//   return [value2, value1];
+// }
+
+// pair1<number, string>(123, 'str');
+
+// //!variant 2
+
+// function pair2<T, Y>(value1: T, value2: Y): [T, Y] {
+//   return [value1, value2];
+// }
+
+//! =========================================
+
+// Задача 5. Узагальнена функція firstOrDefault
+// Умова
+
+// Створи функцію firstOrDefault, яка:
+
+// приймає масив будь-якого типу
+
+// повертає перший елемент масиву або null, якщо масив порожній
+
+// зроби функцію узагальненою
+
+// function firstOrDefault<T>(array: T[]): (T | null) {
+//   // if (array.length === 0) {
+//   //   return null;
+//   // }
+//   // return array[0];
+
+//   //! variant 2
+
+//   return array[0] ?? null;
+// }
+
+// console.log(firstOrDefault<number>([123, 212]));
+// console.log(firstOrDefault<number>([]));
+
+//! =========================================
+
+// // interface TodoResponse {
+// //   status: number;
+// //   message: string;
+// //   data: User[];
+// // }
+
+// // const oneTodoResp = {
+// //   status: 200,
+// //   message: 'success',
+// //   data: { name: 'Alex' },
+// // };
+
+// // interface OneTodoResponse {
+// //   status: number;
+// //   message: string;
+// //   data: User;
+// // }
+
+// const todoResp: Response<User[]> = {
+//   status: 200,
+//   message: 'success',
+//   data: [{ name: 'Alex' }, { name: 'Vlad' }],
+// };
 
 interface User {
   name: string;
-  email: string;
-};
-
-user = {
-  name: 'dmytro',
-  email: 'some@email',
-};
-
-type Status = 'pending' | 'fullfiled' | 'rejected';
-
-let status: Status = 'pending';
-
-status = 'fullfiled';
-
-status = 'rejected';
-
-const numbers: number[] = [1, 2, 3];
-
-// const numbers1: Array<number> = [1, 2, 3];
-
-// const person: [string, number] = ["Alona", 35];
-
-type Arr = boolean | string | number;
-
-const arr: Arr[] = [true, "hello", 43, false];
-
-interface Person {
-  name: string;
-  age: number;
-};
-
-interface Dog {
-  color: string;
-  breed: string;
-};
-
-type ArrElement = Person | Dog;
-
-const arr1: ArrElement[] = [{ name: "Ivan", age: 21 }, { color: 'black', breed: 'buldog' }];
-
-interface Animal {
-  color: string;
-  name: string;
 }
 
-interface Animal {
-  breed: string;
+// interface Response<T> {
+//   status: number;
+//   message: string;
+//   data: T
+// }
+
+//! =========================================
+// Задача 7. Узагальнена функція delay з Promise
+// Умова
+
+// Створи функцію delay, яка:
+
+// приймає значення будь-якого типу
+
+// приймає час у мілісекундах
+
+// повертає Promise, який після затримки повертає передане значення
+
+// зроби функцію узагальненою
+
+// function delay<T>(value: T, delayMs: number): Promise<T> {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(value);
+//     }, delayMs);
+//   });
+// }
+
+// delay<string>('hello', 1000).then(result => console.log(result));
+
+
+//! =========================================
+
+// Задача 8. Узагальнена функція fetchData з Axios
+// Умова
+
+// Створи функцію fetchData, яка:
+
+// приймає URL
+
+// робить GET-запит через axios
+
+// повертає масив об’єктів певного типу, який визначається узагальненням
+
+
+// async function fetchData<T>(url: string): Promise<T[]> {
+//   const response = await axios.get<T[]>(url);
+
+//   return response.data;
+// }
+
+// fetchData<User>('example@com').then((data) => console.log(data))
+
+//! =========================================
+// Задача 9. Узагальнена функція zip
+// Умова
+// Створи функцію zip, яка:
+// приймає два масиви різного типу
+// повертає масив кортежів
+// якщо масиви різної довжини, ігнорує зайві елементи
+// зроби функцію узагальненою
+
+// Приклад використання:
+
+// const numbers = [1, 2, 3];
+// const strings = ["a", "b"];
+// const zipped = zip(numbers, strings); // [[1,"a"], [2,"b"]]
+
+
+// function zip<T, U>(array1: T[], array2: U[]): [T, U][] {
+//   const minLength = Math.min(array1.length, array2.length);
+//   const result: [T, U][] = [];
+//   for (let i = 0; i < minLength; i++) {
+//     result.push([array1[i], array2[i]]);
+//   }
+//   return result;
+// }
+
+// console.log(zip<number, string>([1, 2, 3], ["a", "b"]));
+
+//! =========================================
+
+//! Задача 10. Узагальнені функції saveToStorage і loadFromStorage
+// Умова
+// Створи дві функції:
+// 1) saveToStorage
+// приймає ключ
+// приймає значення будь-якого типу
+// зберігає його у localStorage у форматі JSON
+// 2) loadFromStorage
+// приймає ключ
+// повертає значення
+// Зроби обидві функції узагальненими.
+
+function saveToStorage<T>(key: string, value: T): void {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
-const cat: Animal = {
-  color: 'black',
-  name: 'Jhon',
-  breed: 'cat',
-}
+saveToStorage<string>('STR', 'str1');
 
-interface AnimalPro extends Animal {
-  family: string;
-}
+function loadFromStorage<T>(key: string): (T | null) {
+  const data = localStorage.getItem(key);
 
-const animal: AnimalPro = {
-  color: 'black',
-  name: 'Jhon',
-  breed: 'cat',
-  family: '1232',
-}
-
-// 1. Просте додавання чисел
-
-// Умова:
-// Напиши функцію add, яка приймає два числа та повертає їх суму.
-
-function add(a: number, b: number): number {
-  return a + b;
-}
-
-add(1, 2);
-
-// 2. Привітання користувача
-
-// Умова:
-// Функція greetUser приймає ім’я (string) і логічне значення isMorning (boolean).
-// Повертає рядок "Good morning, {name}" якщо isMorning === true, і "Hello, {name}" якщо false.
-
-function greetUser(name: string, isMorning: boolean): string {
-  return isMorning ? `Good morning, ${name}` : `Hello, ${name}`;
-}
-
-greetUser('Dmytro', false);
-
-// 3. Перевірка числа
-
-// Умова:
-// Функція isPositive приймає будь-яке значення (unknown) і повертає boolean:
-
-// true якщо це число > 0,
-
-// false якщо число ≤ 0 або не число.
-
-function isPositive(value: unknown): boolean {
-  // через тернарний
-  // return value > 0 ? true : false;
-
-  if (typeof value !== 'number') {
-    return false;
-  }
-
-  return value > 0;
-}
-
-isPositive(2);
-
-// 4. Об’єкт користувача
-
-// Умова:
-// Створи інтерфейс User з полями:
-
-// name: string
-
-// age: number
-
-// email?: string (optional)
-
-// Функція getUserSummary приймає об’єкт User та повертає рядок "Name: {name}, Age: {age}, Email: {email}".
-// Якщо email немає — виводимо "Name: {name}, Age: {age},  Email: N/A".
-
-interface User2 {
-  name: string;
-  age: number;
-  email?: string;
-}
-
-const user2: User2 = {
-  name: 'Name',
-  age: 34,
-  email: 'some@mail',
-}
-
-function getUserSummary({ name, age, email = 'N/A' }: User2): string {
-  // if (email) {
-  //   return `Name: ${name}, Age: ${age}, Email: ${email}`;
+  // if (!data) {
+  //   return null
   // }
-  // return `Name: ${name}, Age: ${age},  Email: N/A`;
+  // return JSON.parse(data) as T;
 
-  // return email
-  //   ? `Name: ${name}, Age: ${age}, Email: ${email}`
-  //   : `Name: ${name}, Age: ${age},  Email: N/A`
-
-  return `Name: ${name}, Age: ${age}, Email: ${email}`;
-
+  return data !== null ? JSON.parse(data) as T : null;
 }
 
-getUserSummary(user2);
-
-console.log(getUserSummary(user2));
-
-// 5. Масив чисел
-
-// Умова:
-// Функція sumArray приймає масив чисел number[] і повертає їхню суму.
-
-function sumArray(numbers: number[]): number {
-
-  // let sum: number = 0;
-  // for (const number of numbers) {
-  //   sum += number;
-  // }
-  // return sum;
-
-  return numbers.reduce((acc: number, number) => { return acc + number }, 0)
-}
-
-sumArray([1, 2, 3]);
-
-// 6. Масив рядків або чисел
-
-// Умова:
-// Функція joinArray приймає масив, елементи якого можуть бути string або number і повертає рядок з усіх елементів, розділених комою.
-
-
-
-function joinArray(elements: (number | string)[]): string {
-  return elements.join(', ');
-}
-
-console.log(joinArray([123, 'fedw', 23, 'tratata']));
-
-// 9. Об’єднання union типів
-
-// Умова:
-// Функція formatValue приймає параметр value: string | number | boolean і повертає рядок:
-
-// якщо boolean — "true"/"false",
-
-// якщо number — "Number: {value}",
-
-// якщо string — "String: {value}".
-
-function formatValue(value: (string | number | boolean)): string {
-  if (typeof value === 'string') {
-    return `String: ${value}`;
-  }
-  if (typeof value === 'number') {
-    return `Number: ${value}`;
-  }
-  return String(value);
-}
-
-console.log(formatValue('Hello'));
-console.log(formatValue(123));
-console.log(formatValue(true));
-
-
-// 10. Масив невідомого типу
-
-// Умова:
-// Функція countNumbers приймає масив unknown[] і повертає кількість чисел у масиві.
-
-function countNumbers(arrayCount: unknown[]): number {
-  return arrayCount.filter((element) => typeof element === 'number').length;
-}
-
-console.log(countNumbers([1, 2, 3, '4324']));
+const result = loadFromStorage<string>('STR');
+console.log(result);

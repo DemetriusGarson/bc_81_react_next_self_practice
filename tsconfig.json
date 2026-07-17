@@ -1,24 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "es2023",
-    "module": "esnext",
-    "lib": ["ES2023", "DOM"],
-    "types": ["vite/client"],
-    "allowArbitraryExtensions": true,
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "noUnusedLocals": false, // подсказки о неиспользуемых переменных(false/true)
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true, // позволяет работать с энамами, что бы не появлялось ничего лишнего в JS в результате работы с типизацией
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

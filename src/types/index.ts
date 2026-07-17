@@ -1,8 +1,8 @@
-export interface Student {
+export interface Dog {
     id: number;
     name: string;
     age: number;
-    course: string;
-    isOnline: boolean;
+    breed: string;
+    isFriendly: boolean;
     avatar: string;
 }

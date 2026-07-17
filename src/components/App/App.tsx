@@ -1,6 +1,25 @@
-import { students } from '../../data/data';
-import StudentItem from '../Student/StudentItem';
-const student = students[0];
+import { useState } from 'react';
+import { initialDogs } from '../../data/dogs';
+import DogsList from '../DogsList/DogsList';
+import Button from '../Button/Button';
+
 export default function App() {
-  return <StudentItem student={student} />;
+  const [dogs, setDogs] = useState(initialDogs);
+
+  const [isDogsListVisible, setisDogsListVisible] = useState(false);
+
+  const toggleShowDogsList = () => {
+    setisDogsListVisible(!isDogsListVisible);
+  };
+
+  return (
+    <>
+      <Button
+        type={'button'}
+        textContent={isDogsListVisible ? 'Hide Dog List' : 'Show Dogs List'}
+        handleClick={toggleShowDogsList}
+      />
+      {isDogsListVisible && <DogsList dogs={dogs} />}
+    </>
+  );
 }

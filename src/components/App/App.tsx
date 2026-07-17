@@ -15,7 +15,7 @@ export default function App() {
   return (
     <>
       <Button
-        type={'button'}
+        type="button"
         textContent={isDogsListVisible ? 'Hide Dog List' : 'Show Dogs List'}
         handleClick={toggleShowDogsList}
       />

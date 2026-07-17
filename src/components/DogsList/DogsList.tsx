@@ -1,5 +1,5 @@
 import type { Dog } from '../../types';
-import DogsItem from '../DogsItem/DogsItem';
+import DogItem from '../DogItem/DogItem';
 
 interface DogsListProps {
   dogs: Dog[];
@@ -11,7 +11,7 @@ export default function DogsList({ dogs }: DogsListProps) {
       {dogs.map(dog => {
         return (
           <li key={dog.id}>
-            <DogsItem dog={dog} />
+            <DogItem dog={dog} />
           </li>
         );
       })}

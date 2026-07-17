@@ -5,9 +5,10 @@ import Button from '../Button/Button';
 
 interface DogProps {
   dog: Dog;
+  handleDelete: (id: number) => void;
 }
 
-export default function DogsItem({ dog }: DogProps) {
+export default function DogsItem({ dog, handleDelete }: DogProps) {
   const [isAddressVisible, setIsAddressVisible] = useState(false);
   const handleShowAddress = () => {
     setIsAddressVisible(true);
@@ -18,6 +19,11 @@ export default function DogsItem({ dog }: DogProps) {
       <h2> Name:{dog.name}</h2>
       <p> Age:{dog.age}</p>
       <p> Breed: {dog.breed}</p>
+      <Button
+        type="button"
+        textContent="Delete"
+        handleClick={() => handleDelete(dog.id)}
+      />
 
       {isAddressVisible ? (
         <AddressInfo address={dog.address} />

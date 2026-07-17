@@ -12,6 +12,11 @@ export default function App() {
     setisDogsListVisible(!isDogsListVisible);
   };
 
+  const handleDelete = (id: number) => {
+    const updatedDogs = dogs.filter(dog => dog.id !== id);
+    setDogs(updatedDogs);
+  };
+
   return (
     <>
       <Button
@@ -19,7 +24,9 @@ export default function App() {
         textContent={isDogsListVisible ? 'Hide Dog List' : 'Show Dogs List'}
         handleClick={toggleShowDogsList}
       />
-      {isDogsListVisible && <DogsList dogs={dogs} />}
+      {isDogsListVisible && (
+        <DogsList dogs={dogs} handleFunction={handleDelete} />
+      )}
     </>
   );
 }

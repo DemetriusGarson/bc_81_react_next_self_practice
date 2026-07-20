@@ -1,32 +1,45 @@
 import { useState } from 'react';
-import { initialDogs } from '../../data/dogs';
-import DogsList from '../DogsList/DogsList';
+import { getUsers } from '../../services/API';
+import type { User } from '../../types';
 import Button from '../Button/Button';
+import UserList from '../UserList/UserList';
+import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function App() {
-  const [dogs, setDogs] = useState(initialDogs);
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const [isDogsListVisible, setisDogsListVisible] = useState(false);
-
-  const toggleShowDogsList = () => {
-    setisDogsListVisible(!isDogsListVisible);
-  };
-
-  const handleDelete = (id: number) => {
-    const updatedDogs = dogs.filter(dog => dog.id !== id);
-    setDogs(updatedDogs);
+  const showUsers = async () => {
+    try {
+      setIsLoading(true);
+      setIsError(false);
+      const data = await getUsers();
+      setUsers(data);
+      console.log(users);
+    } catch {
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
-      <Button
-        type="button"
-        textContent={isDogsListVisible ? 'Hide Dog List' : 'Show Dogs List'}
-        handleClick={toggleShowDogsList}
-      />
-      {isDogsListVisible && (
-        <DogsList dogs={dogs} handleFunction={handleDelete} />
+      {users.length > 0 ? (
+        <UserList users={users} />
+      ) : (
+        <Button
+          type="button"
+          textContent="Show Users"
+          handleClick={showUsers}
+        />
       )}
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+
+      {/* <button onClick={getUsers}>Show Users</button> */}
     </>
   );
 }
